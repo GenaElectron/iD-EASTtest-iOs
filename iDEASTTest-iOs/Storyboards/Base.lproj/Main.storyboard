@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="70h-xJ-9iN">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14460.20"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--Navigation Controller-->
+        <scene sceneID="u3D-WS-zxs">
+            <objects>
+                <navigationController extendedLayoutIncludesOpaqueBars="YES" automaticallyAdjustsScrollViewInsets="NO" id="70h-xJ-9iN" sceneMemberID="viewController">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="yIx-X9-RKW">
+                        <rect key="frame" x="0.0" y="20" width="375" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <connections>
+                        <segue destination="BYZ-38-t0r" kind="relationship" relationship="rootViewController" id="mTz-pi-tx3"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="mHN-J1-DBa" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-698" y="134"/>
+        </scene>
+        <!--Sections-->
+        <scene sceneID="tne-QT-ifu">
+            <objects>
+                <viewController extendedLayoutIncludesOpaqueBars="YES" automaticallyAdjustsScrollViewInsets="NO" id="BYZ-38-t0r" customClass="SectionsViewController" customModule="iDEASTTest_iOs" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="SyY-hO-80s">
+                                <rect key="frame" x="0.0" y="64" width="375" height="603"/>
+                                <color key="backgroundColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.95686274510000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            </tableView>
+                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" animating="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="Sxg-Sv-Jt7">
+                                <rect key="frame" x="169" y="347" width="37" height="37"/>
+                                <color key="color" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </activityIndicatorView>
+                        </subviews>
+                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstItem="SyY-hO-80s" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="3JB-v7-pyp"/>
+                            <constraint firstItem="SyY-hO-80s" firstAttribute="bottom" secondItem="6Tk-OE-BBY" secondAttribute="bottom" id="UIM-Hr-hoQ"/>
+                            <constraint firstItem="Sxg-Sv-Jt7" firstAttribute="centerX" secondItem="SyY-hO-80s" secondAttribute="centerX" id="VfK-Rj-Szx"/>
+                            <constraint firstItem="SyY-hO-80s" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" id="Y7h-d1-BHX"/>
+                            <constraint firstItem="SyY-hO-80s" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="d92-8R-MUO"/>
+                            <constraint firstItem="Sxg-Sv-Jt7" firstAttribute="centerY" secondItem="SyY-hO-80s" secondAttribute="centerY" id="nCY-Ox-7U0"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
+                    </view>
+                    <navigationItem key="navigationItem" title="Sections" id="3c1-aX-CVt">
+                        <barButtonItem key="backBarButtonItem" title="Back" id="d9V-tA-k1n"/>
+                    </navigationItem>
+                    <connections>
+                        <outlet property="spinner" destination="Sxg-Sv-Jt7" id="b4i-i0-vZl"/>
+                        <outlet property="tableView" destination="SyY-hO-80s" id="1Rl-oD-zT1"/>
+                        <segue destination="XNJ-Wb-HK5" kind="show" identifier="showSectionContentViewController" id="FuI-bU-s3o"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="153" y="134"/>
+        </scene>
+        <!--Section Content View Controller-->
+        <scene sceneID="xF2-cO-6s8">
+            <objects>
+                <viewController extendedLayoutIncludesOpaqueBars="YES" automaticallyAdjustsScrollViewInsets="NO" id="XNJ-Wb-HK5" customClass="SectionContentViewController" customModule="iDEASTTest_iOs" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="KhF-pv-aJg">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="hUy-4V-B8a">
+                                <rect key="frame" x="0.0" y="64" width="375" height="603"/>
+                                <color key="backgroundColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.95686274510000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            </tableView>
+                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" animating="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="nOr-aQ-fUQ">
+                                <rect key="frame" x="169" y="347" width="37" height="37"/>
+                                <color key="color" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </activityIndicatorView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstAttribute="trailing" secondItem="hUy-4V-B8a" secondAttribute="trailing" id="1bM-OF-hcS"/>
+                            <constraint firstItem="nOr-aQ-fUQ" firstAttribute="centerY" secondItem="hUy-4V-B8a" secondAttribute="centerY" id="8je-Le-O1Y"/>
+                            <constraint firstItem="hUy-4V-B8a" firstAttribute="bottom" secondItem="Ofk-3Y-fhi" secondAttribute="bottom" id="Aha-sE-kgJ"/>
+                            <constraint firstItem="nOr-aQ-fUQ" firstAttribute="centerX" secondItem="hUy-4V-B8a" secondAttribute="centerX" id="DFk-vD-Qyf"/>
+                            <constraint firstItem="hUy-4V-B8a" firstAttribute="leading" secondItem="KhF-pv-aJg" secondAttribute="leading" id="eCt-KL-j1H"/>
+                            <constraint firstItem="hUy-4V-B8a" firstAttribute="top" secondItem="Ofk-3Y-fhi" secondAttribute="top" id="kZV-2H-I6n"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="Ofk-3Y-fhi"/>
+                    </view>
+                    <connections>
+                        <outlet property="spinner" destination="nOr-aQ-fUQ" id="kze-eI-zMQ"/>
+                        <outlet property="tableView" destination="hUy-4V-B8a" id="BLz-W7-eGB"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="X12-Bk-aRx" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1013.6" y="133.5832083958021"/>
+        </scene>
+    </scenes>
+</document>
