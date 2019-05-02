@@ -40,6 +40,10 @@ class SectionContentViewController: UIViewController {
         self.navigationController?.setNavigationBarHidden(false, animated: true)
     }
     
+//    deinit {
+//        print("SectionContentViewController deinit")
+//    }
+    
     override var prefersStatusBarHidden: Bool {
         return false
     }
@@ -47,7 +51,6 @@ class SectionContentViewController: UIViewController {
     private func setEventHandlerFromData() {
         data.resultHandler = ({ [weak self] handler in
             DispatchQueue.main.async {
-                //self?.spinner.stopAnimating()
                 switch handler{
                     case .showMessageEmptyData:
                         self?.spinner.stopAnimating()

@@ -11,13 +11,11 @@ import CollectionAndTableViewCompatible
 
 protocol SectionsTableViewDataSourceProtocol {
     var resultHandler: ItemClosure<SectionsTableViewDataSourceHandler>? { get set }
-    subscript(indexPath: IndexPath) -> TableViewCompatible { get set }
     func prepareData()
     func refreshData()
 }
 
-class SectionsTableViewDataSource: TableViewDataSource, SectionsTableViewDataSourceProtocol {
-    
+class SectionsTableViewDataSource: TableViewDataSource, SectionsTableViewDataSourceProtocol {    
     private let sectionsNetworkService: SectionsNetworkServiceProtocol = SectionsNetworkService()
     
     var resultHandler: ItemClosure<SectionsTableViewDataSourceHandler>?
@@ -29,13 +27,17 @@ class SectionsTableViewDataSource: TableViewDataSource, SectionsTableViewDataSou
     
     private var isLoading = false
     
+    private var isPrepared = false
+    
     func prepareData() {
+        guard !isPrepared else { return }
         fetch(completion: {[weak self] data, error in
             if let error = error {
                 self?.resultHandler?(.showErrorWithAction(error))
                 return
             }
             if let items = data {
+                self?.isPrepared = true
                 self?.sections.first?.items.append(contentsOf: items)
                 self?.resultHandler?(.reloadTableView)
             }
@@ -43,7 +45,7 @@ class SectionsTableViewDataSource: TableViewDataSource, SectionsTableViewDataSou
     }
     
     func refreshData() {
-        guard !isLoading else {
+        guard !isLoading, isPrepared else {
             self.resultHandler?(.endRefreshing)
             return
         }
@@ -64,8 +66,8 @@ class SectionsTableViewDataSource: TableViewDataSource, SectionsTableViewDataSou
     
     private func fetch(completion: @escaping OptionalItemClosureWithError<[TableViewCompatible]>) {
         isLoading = true
-        sectionsNetworkService.fetchSections { data, error in
-            self.isLoading = false
+        sectionsNetworkService.fetchSections {[weak self] data, error in
+            self?.isLoading = false
             if let error = error {
                 completion(nil, error)
                 return
@@ -80,15 +82,12 @@ class SectionsTableViewDataSource: TableViewDataSource, SectionsTableViewDataSou
                     return
             }
             guard fetchTotal != 0 else {
-                self.resultHandler?(.showMessageEmptyData)
+                self?.resultHandler?(.showMessageEmptyData)
                 return
             }
-            var items = [TableViewCompatible]()
+            
+            let items: [TableViewCompatible] = fetchContent.map { return SectionsCellModel(section: $0) }
 
-            for section in fetchContent {
-                let sectionCellModel = SectionsCellModel(section: section)
-                items.append(sectionCellModel)
-            }
             completion(items, nil)
         }
     }

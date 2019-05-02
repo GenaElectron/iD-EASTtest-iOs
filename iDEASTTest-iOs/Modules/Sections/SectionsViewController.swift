@@ -40,8 +40,8 @@ class SectionsViewController: UIViewController {
         if segue.identifier == SectionContentViewController.sequeIdentifer{
             let vc = segue.destination as! SectionContentViewController
             if let indexPath = tableView.indexPathForSelectedRow{
-                let sectionCellModel = self.data[indexPath] as? SectionsCellModel
-                vc.section = sectionCellModel?.rawData
+                let sectionsTableViewCell = self.tableView.cellForRow(at: indexPath) as? SectionsTableViewCell
+                vc.section = sectionsTableViewCell?.model?.rawData
             }
         }
     }

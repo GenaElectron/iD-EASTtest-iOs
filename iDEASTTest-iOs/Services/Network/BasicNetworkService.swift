@@ -13,7 +13,7 @@ import SwiftyJSON
 class BasicNetworkService {
     internal func request(url: NetworkServiceURLProtocol, completion: @escaping OptionalItemClosureWithError<JSON>) {
         guard let sourseUrl = url.sourseUrl else {
-            let error = ApplicationError(description: "BasicService ERROR: sourse url = nil")
+            let error = ApplicationError(description: "BasicNetworkService ERROR: sourse url = nil")
             completion(nil,error)
             return
         }

@@ -18,12 +18,12 @@ class SectionContentNetworkService: BasicNetworkService, SectionContentNetworkSe
     
     func fetchSectionContent(section: Section, page: Int, pageSize: Int, completion: @escaping OptionalItemClosureWithError<ResponceSectionContent>) {
         guard let id = section.id else {
-            let error = ApplicationError(description: "SectionContentService ERROR: section id is nil")
+            let error = ApplicationError(description: "SectionContentNetworkService ERROR: section id is nil")
             completion(nil, error)
             return
         }
         guard page >= 1, pageSize >= 1 else {
-            let error = ApplicationError(description: "SectionContentService ERROR: page or pageSize value < 1")
+            let error = ApplicationError(description: "SectionContentNetworkService ERROR: page or pageSize value < 1")
             completion(nil, error)
             return
         }
@@ -42,7 +42,7 @@ class SectionContentNetworkService: BasicNetworkService, SectionContentNetworkSe
                     let responceSectionContent = ResponceSectionContent(json: json)
                     completion(responceSectionContent, nil)
                 } else {
-                    let error = ApplicationError(description: "SectionContentService ERROR: JSON is nil")
+                    let error = ApplicationError(description: "SectionContentNetworkService ERROR: JSON is nil")
                     completion(nil, error)
                 }
         }

@@ -15,8 +15,7 @@ protocol SectionContentTableViewDataSourceProtocol {
     func refreshData()
 }
 
-class SectionContentTableViewDataSource: TableViewDataSource, SectionContentTableViewDataSourceProtocol {
-    
+class SectionContentTableViewDataSource: TableViewDataSource, SectionContentTableViewDataSourceProtocol {    
     private let sectionContentNetworkService: SectionContentNetworkServiceProtocol = SectionContentNetworkService()
     
     let section: Section
@@ -29,6 +28,10 @@ class SectionContentTableViewDataSource: TableViewDataSource, SectionContentTabl
         sections.append(TableViewSection(sortOrder: 0, items: []))
     }
     
+//    deinit {
+//        print("SectionContentTableViewDataSource deinit")
+//    }
+    
     private var isLoaded = false {
         didSet {
             if isLoaded == true{
@@ -37,6 +40,8 @@ class SectionContentTableViewDataSource: TableViewDataSource, SectionContentTabl
         }
     }
     
+    private var isPrepared = false
+    
     private var isLoading = false
     
     private var page = 1
@@ -44,12 +49,14 @@ class SectionContentTableViewDataSource: TableViewDataSource, SectionContentTabl
     private let pagesPerBatch  = 20
     
     func prepareData() {
+        guard !isPrepared else { return }
         fetch(page: page, pageSize: pagesPerBatch) {[weak self] data, error in
             if let error = error {
                 self?.resultHandler?(.showErrorWithAction(error))
                 return
             }
             if let items = data {
+                self?.isPrepared = true
                 self?.sections.first?.items.append(contentsOf: items)
                 self?.resultHandler?(.reloadTableView)
             }
@@ -57,7 +64,7 @@ class SectionContentTableViewDataSource: TableViewDataSource, SectionContentTabl
     }
     
     func refreshData() {
-        guard !isLoading else {
+        guard !isLoading, isPrepared else {
             self.resultHandler?(.endRefreshing)
             return
         }
@@ -96,8 +103,8 @@ class SectionContentTableViewDataSource: TableViewDataSource, SectionContentTabl
     
     private func fetch(page: Int, pageSize: Int,_ completion: @escaping OptionalItemClosureWithError<[TableViewCompatible]>) {
         isLoading = true
-        sectionContentNetworkService.fetchSectionContent(section: section, page: page, pageSize: pagesPerBatch) { data, error in
-            self.isLoading = false
+        sectionContentNetworkService.fetchSectionContent(section: section, page: page, pageSize: pagesPerBatch) {[weak self] data, error in
+            self?.isLoading = false
             if let error = error {
                 completion(nil, error)
                 return
@@ -113,19 +120,15 @@ class SectionContentTableViewDataSource: TableViewDataSource, SectionContentTabl
                     return
             }
             guard fetchTotal != 0 else {
-                self.resultHandler?(.showMessageEmptyData)
+                self?.resultHandler?(.showMessageEmptyData)
                 return
             }
-            var items = [TableViewCompatible]()
+            let items: [TableViewCompatible] = fetchContent.map { return SectionContentCellModel(content: $0) }
             
-            for item in fetchContent {
-                let sectionCellModel = SectionContentCellModel(content: item)
-                items.append(sectionCellModel)
-            }
-            if self.page == fetchPages{
-                self.isLoaded = true
+            if self?.page == fetchPages{
+                self?.isLoaded = true
             } else {
-                self.page += 1
+                self?.page += 1
             }
             completion(items, nil)
         }

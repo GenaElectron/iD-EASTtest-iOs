@@ -30,7 +30,7 @@ class SectionsNetworkService: BasicNetworkService, SectionsNetworkServiceProtoco
                 let responceSections = ResponceSections(json: json)
                 completion(responceSections, nil)
             } else {
-                let error = ApplicationError(description: "SectionsServiceError ERROR: mapping fault")
+                let error = ApplicationError(description: "SectionsNetworkService ERROR: mapping fault")
                 completion(nil, error)
             }
         }

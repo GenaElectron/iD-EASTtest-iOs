@@ -39,8 +39,9 @@ struct SectionContent: JSONable {
 
 extension SectionContent {
     private func convertToDate(from: String?) -> Date?{
+        guard let string = from else { return nil }
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ssZ"
-        return dateFormatter.date(from: from ?? "")
+        return dateFormatter.date(from: string)
     }
 }
